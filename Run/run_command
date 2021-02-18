@@ -1,0 +1,96 @@
+--docker run redis
+
+it runned the latest version, which was 5.0.5
+
+-- docker run redis:4.0
+
+4.0 is a tag of the image, if we dont especify the tag, docker assums the latest
+
+
+-------------------------------------------------
+
+docker containers dont listen to the standart input
+
+for allowing that: docker run -i image
+
+-i means interative
+
+but only with the -i, the container may not responde back
+
+-- docker run -it image
+
+ with -i and -t everything works fine  (atachad to the terminal and interative mode)
+
+ --------------------------------------------------------------
+
+ PORT MAPPING
+
+When a container is running we can see that is running, but how the user uses that application??
+
+The application is listen to the 5000 port, what to access it??
+
+ 1 way: through the ip of the container, every container has a ip, only accessible in the docker host (my pc) --> 172.17.0.2:5000
+
+        how to find the ip of a container:    docker inspect container_ip
+
+        greatest disadvantage:  users outside the host, cant use the app!
+
+
+ 2 way:  using the ip of the docker host, but first, you have to map the port of the container to a free port of the docker host
+
+        how?
+
+            docker run -p 80:5000 name_of_image
+
+                        now our ip:80 is equal to ip_container:5000
+
+        
+        This way you can map any container to different ports
+
+--------------------------------------------------------------------------------------
+
+Volume MAPPING
+
+docker run mysql
+
+    how to access the files that mysql saves?  It saves in a independet world, just like vm
+
+    Imagine that you have a lot of tables in your mysql container, the momento you remove the container, all data goes away
+
+
+    Solution:
+                Map folders 
+
+                            How?
+
+                                    docker run -v /opt/datadir:/var/lib/mysql
+
+
+                                    Now, everything that is in the container folder  /var/lib/mysql is in folder /opt/datadir of the docker host
+
+                                    So, each time we run a that container we dont start from the scracth, we always have that files because is like the folders are the same
+
+----------------------------------------------------------------------------------------
+
+Inspect container
+
+docker inspect container_name
+
+    all information regarding container
+
+------------------------------------------------------------------------------------------
+
+Containers logs
+
+    docker logs container_name
+
+    all logs about container_name
+--------------------------------------------------------------------------------------------
+
+docker run -d timer
+
+    runs in the background, but what if i want to get back there?
+
+    docker attach container_ip
+
+-------------------------------------------------------------------------------------------

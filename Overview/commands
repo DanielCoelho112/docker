@@ -1,0 +1,99 @@
+-->docker run
+
+start a container from an image
+
+docker run nginx   (start a container from the nginx image, it the image isnt on your computer, it goes to the docker hub and pulls it down)
+
+
+-->docker ps
+
+list all containers
+each containers creates automaticaly an name and an id
+
+docker ps -a 
+
+show all containers, running and not
+
+-->docker stop <container_id or container_name>
+
+this only stops the container
+
+-->docker rm <container_id or container_name>
+
+this removes the container from our pc, it no longer shows on docker ps -a
+
+--> docker images
+
+List all images on your pc
+
+
+--> docker rmi <name_of_image>
+
+this delete the image from your computer
+Be careful to delete all containers associated with that image first
+
+--> docker pull <name_of_image>
+
+goes to docker hub and only download the image, dont create any container
+
+----If we do docker run ubuntu:
+
+container exits!, because container is not made to run a OS, only programs, and once the task is complete, the container exits
+
+The container is only live as long the taks he is performins lives
+
+
+--> docker run -d <container_name>
+
+-d means detachad, i.e, runs in the background
+
+--------------------------------------------------------------------
+
+using the images from people, the name of image is: danielc11/name_of_image
+
+############################################################################################
+docker run
+############################################################################################
+
+
+--docker run -d centos sleep 20
+
+Run the centos on a container, because de centos is an OS, usually it exited the moment afeter, but with a sleep 20, first sleep, and then exits
+-d runs on background, so the terminal comes back to me
+
+removing containers, we dont need to especify all id, only the first characters
+
+
+----------------------------------------------------------------
+
+Run commands inside the containers
+
+docker run ubuntu cat /etc/default
+
+meaning: runs the container and exec that
+
+
+docker exec c1a19d3a7ca7  cat /etc/default
+
+
+meaning: in the container_id =  c1a19d3a7ca7, run this command: cat /etc/default
+
+The output is that file in the terminal
+
+--------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

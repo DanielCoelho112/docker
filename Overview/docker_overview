@@ -1,0 +1,23 @@
+Working with different apps in a project can bring a lot of compabilities issues!
+
+The best way is to run each app in a container, with all the librarys
+
+-----------------------Containers--------------------------------------------------
+
+have their properties, just like virtual machine, but they all share the same OS kernel
+
+Image vs container
+
+Image is a package, it is used to create one or more Containers
+
+Containers are running instances of images 
+
+In the docker hub there are images!
+
+
+----------------------------------------------------------------------------------------
+
+Imagine tha I build an App, how i tell the users how to use it??
+
+Build a dockerfile along the app, and use them to create an image, the user gets this image and we can be sure it will run just like in did on my OS
+
