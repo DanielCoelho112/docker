@@ -1,0 +1,73 @@
+how to create my own images?
+
+Dockerfile: (text file)
+------------------------------------
+FROM Ubuntu               # Todas as imagens criadas tem de ser criadas a partir de outras, e normalemente usa se o SO em que a image esta a ser criada
+
+RUN apt-get update && apt-get -y install python  # RUN command run instructions on the image above, so we use them to create all dependencies
+
+RUN pip install flask flask-mysql
+
+COPY . /opt/source-code  # copy the code in the current location (.) to the /opt/source-code (inside the docker image)
+
+ENTRYPOINT FLASK_APP=/opt(source-code/app.py flask run) # allow us to run a command when the image is run as a container (code to launch the application)
+---------------------------------------------------
+
+-- docker build . -f Dockerfile -t danielc/name_of_image
+
+-- docker push danielc/name_of_image  -- first you have to be logged in : -- docker login
+
+If you build the image and some problem happen, the next time you run, the processing before the error will be skipped
+So each time you updated the source code, only the top of the new layers will be processed into the new image
+
+
+
+One way to do this, is run the ubuntu image, and do the RUN commands there to see if they are enough
+
+
+
+install python and pip:
+
+                            RUN apt-get update
+                            RUN apt-get install -y python python-pip
+                            RUN pip install flask
+
+
+
+ENVIRONEMENT VARIABLES
+
+export APP_COLOR=blue;  now we have a ENVIRONEMENT VARIABLE, we can reach it everywhere
+
+in python:  color = os.enviro.get('APP_COLOR')
+
+You can create a env variable when running a docker run:
+                                                            docker run -e APP_COLOR=blue name_of_image
+
+When running the inspect, you can check the env variable 
+
+
+When the task that the container is doing finishs the container exits
+
+by default the container doenst attach a terminal to it 
+
+
+docker run ubuntu [COMMAND]
+docker run ubuntu sleep 5      HOW TO DO THIS PERMANENTLY?       CMD ["command", "param1"]
+
+                                                Dockerfile:     CMD sleep 5 or CMD ["sleep","5"]
+
+
+CMD vs ENTRYPOINT???
+
+when we define something in the docker run it will replace the cmd, and append to the ENTRYPOINT:
+                                                                                                            ENTRYPOINT["sleep"]
+                                                                                                            CMD["5"]
+
+
+                                                                                                                
+                                                                                                             docker run ubuntu  --> sleep 5
+                                                                                                             docker run ubuntu 10 --> sleep 10 
+
+To overwrite a ENTRYPOINT:
+
+docker run --entrypoint sleep2.0 ubuntu 10 --> sleep2.0 10
