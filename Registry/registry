@@ -1,0 +1,14 @@
+If the container are the rain, they would rain from the cloud-- (docker registry)
+
+Images are store in the docker registry
+
+docker run nginx --> the real name of the image isnt nginx, but nginx/nginx.
+When only one name is provided, we assume both name are equal.
+
+image: user / image
+
+where are the images:   docker hub
+
+docker hub is a example of a docker registry, there are others
+
+There are private registrys, that requires you to be logged in:  docker login
