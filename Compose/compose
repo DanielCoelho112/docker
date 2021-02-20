@@ -1,0 +1,63 @@
+If we have a big project, we are going to have a lot of images and then a lot of containers, instead of running lot of docker run ..., we make a docker-compose.yml, and then docker-compose up
+
+Imagine that you do a docker run of each container individually, if you dont link the containers nothing will work, how one container nows that the MySQL is of the other contaiener and of the system for exemple?
+
+
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+
+if we have 2 dependencies:
+
+docker run -d --name=vote -p 5000:80 --link name_of_image:container name_of_image(our)
+
+docker-compose.yml
+------------------------------------------
+redis:       (name_of_container)
+    image:redis (name_of_image)
+    
+
+db:
+    image: db
+
+
+vote:
+    image: voting_app   
+    ports:
+        -5000:80
+    links:
+        -redis:redis
+------------------------------------------
+
+
+Now just run: -- docker-compose up
+
+docker-compose version1:   choose the default networks for all the containers
+docker-compose version2:   automatically create a dedicated network for all the containers, so all containers are able to communicate with each others (SO YOU DONT NEED TO USE LINKS IN VERSION 2)
+                            Allows you to define an order to launch the containers, with the key: depends_on:
+                            ------------------------------------------
+                            version:2
+                            Services:
+                                redis:       (name_of_container)
+                                    image:redis (name_of_image)
+                                    
+
+                                db:
+                                    image: db
+
+
+                                vote:
+                                    image: voting_app   
+                                    ports:
+                                        -5000:80
+                                    depends_on: 
+                                        -redis
+                                    environment:
+                                        -password: pas2020
+                                ------------------------------------------
+docker-compose version3:    similar to version2, but with docker swarm and docker stacks
+
+
+key ENVIRONEMENT -- defines a ENVIRONEMENT VARIABLE in the container, just like docker run -e env_variabel=blue name_of_image
+
+sometimes we define some paswwords as environment variables so in order for the container to work, we have to define them -- you can build an image that anyone can use but in order for the container work they have to insert the pass in a form of env variable
+
+
