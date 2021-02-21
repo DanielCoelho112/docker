@@ -1,0 +1,100 @@
+---------------------- engine----------------------------------------------
+
+docker engine -- host with the docker installed
+
+docker engine:   
+                    docker cli : commands
+
+                    REST API
+
+                    docker daemon : stores images, etc
+
+when the ubuntu boots it creates some processes, PID=1,PID=2,etc  (PROCESS ID)
+
+when a container in turn on, it must have the ID process started with 1,2 because it is just like a virtual machine.
+However this 2 systems are not completely independent, so they can not have the same ID, inside the container the PID can be 1, but in the host has to be 5 or something
+
+
+Containers and host use the same CPU and memory, so who manage this?
+
+There are no restrictions, the container can use all the cpu and memory.
+You can create this restrictions with de cgroups:
+
+        -- docker run --cpus=.5 ubuntu  (garantees that container only uses at maximum 50 % of cpu)
+        -- docker run --memory=100m ubuntu (maximum 100 Mb)
+
+
+
+Run commands inside a container: exec
+
+docker exec container_id ps -eaf  (run the ps -eaf in the container_id)
+
+ps -eaf list all processes
+
+doing this we saw that the unique process running in the container has de PID = 1, however that same process in the host has the PID=22921
+
+
+
+
+--------------------------storage-------------------------------------------------------
+
+where docker is in your pc:
+
+        /var/lib/docker:
+                        --aufs
+                        --containers
+                        --image
+                        --volumes
+
+whenever you update your image, the docker use the part that doesnt change in that folders and then reuse
+
+
+
+Container layer ---------- READ WRITE   when you change  the app.py in the container, you are not changing the image, it is a copy
+
+Image layer -------------- READ ONLY
+
+
+docker volume create data_volume        create inside the volumes in the docker folders
+
+docker run -v data_volume:/var/lib/mysql mysql  map the folder of the container to the folder on your systems
+                                                when you stop the container, the files are kept on your fylestream, so when the container starts again, we continually use them
+
+if you dont do: docker volume create data_volume, docker automatically creates 
+
+docker uses storage drivers to do all this, creates volumes ...
+
+
+how to see the storage usage by docker??
+        -- docker system df
+
+
+--------------networks---------------------------------------------------------
+
+docker comes with 3 networks:   -- bridge (default) docker run ubuntu 
+                                -- none  docker run ubuntu --network=none
+                                -- host docker run ubuntu --network=host
+
+
+bridge is the default network, all the container can communicate with each other (using container_ip), but in order to them communicate with the host you have to map ports
+host, here you dont need to map ports, because if your container runs on port 5000, it will run on the port 5000 of th host ip adress
+none the containers have no communication with the outside world
+
+
+docker by default only creates onde network, we can create more:
+
+        docker network create \
+            --driver bridge \
+            --subnet 182.18.0.0/16
+            custom-isolated-networks
+
+to list all networks: -- docker network ls
+
+
+how to the what network some container use:  use the -- docker inspect container_id (and find a section named network)
+
+containers connecting to each other:
+
+                                        sql.connect(container_ip) or sql.connect(container_name) (because ip may vary)  
+
+                                        this are the options in other to the containers reach each other
