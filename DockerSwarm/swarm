@@ -1,0 +1,14 @@
+you can have a lot of docker host
+
+Set up:
+        you have to have machines with docker installed
+        you have to choose one machine to be the swarm manager, and the others the workers
+
+        then:  --docker swarm init, and then copy a link and give to the others for they join the docker swarm
+
+
+--docker run my-web-server, creates the container in your docker host
+
+(on the swarm manager)
+-- docker service create --replicas=3 my-web-server, create 3 instances of the container across the workers
+

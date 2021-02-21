@@ -1,0 +1,12 @@
+in docker you can only run 1 container in each docker run
+
+in kubernetes:   kubect1 run --replicas=1000 my-web-server
+
+kubernetes does a lot of things, scale up, scale down ...
+
+
+
+kubernetes uses docker host to run containers
+
+
+kubernetes as a lot of nodes (machines), is a cluster of nodes,  in which one is the master, and is responsible for the orchestrachion of the nodes

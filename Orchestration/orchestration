@@ -1,0 +1,19 @@
+problems using docker:   when the container, ex: nodejs, is getting full capacity, we just need to create other container: docker run nodejs
+                         you have to watch the containers, because if the container fails, YOU have to run another container
+                         if the docker host crash, the containers running on that host became inaccessible
+
+solution1:                hiring an engineer just to watch this, and fix it needed
+
+
+solution1:  ORCHESTRATION:      set of scripts that maintain the containers on a stage of production
+                                tipically consist in a lot of docker host, so if one fail the other get up
+                                this can scale up the number of instances of a container when the users get up, and decrease if the users decrease
+
+
+                                Types of ORCHESTRATION:     
+                                                            Docker Swarm   (easy to set up to start but lacks a lot features)
+                                                            Kubernetes      (moderate to set up to start but has a lot features)  (BEST)
+                                                            Mesos
+
+
+

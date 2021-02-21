@@ -1,0 +1,8 @@
+container runs on a base kernel, so we cannot run a container made in windows in a host in linux, and viceversa
+
+options:
+            docker on windows using docker toolbox  (using virtual machine on a windows )
+            docker desktop for windows, the docker is installed in a linux on the microsoft hyper-v (it works like a oracle) only windows enterprise version has this
+
+when you install docker on windows, it ask you for activate the hyper-v or will malfunctional
+the server version is linux, so will only run linux containers, you can do something to only run windows containeres
